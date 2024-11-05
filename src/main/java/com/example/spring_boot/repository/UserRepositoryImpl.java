@@ -19,6 +19,11 @@ public class UserRepositoryImpl implements UserRepository {
             setLastName("Smith");
             setUsername("johnsmith");
         }});
+        tmpUsers.add(new User() {{
+            setFirstName("Patrik");
+            setLastName("Pappsson");
+            setUsername("user2");
+        }});
 
         for (User user : tmpUsers) {
             users.put(user.getUsername(), user);

@@ -4,5 +4,7 @@ public interface RiskAssessor {
     /**
      * Assess name for being a security risk
      */
-    boolean assess(String name);
+    boolean isSecurityRisk(String name);
+
+    boolean isSecurityRisk(User user);
 }
