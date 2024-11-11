@@ -7,6 +7,7 @@ import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
+import jakarta.annotation.Nullable;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -47,4 +48,12 @@ public class AbstractTypeUsageTests {
         rule.allowEmptyShould(true).check(importedClasses);
     }
 
+    @Test
+    public void methodsNeverReturnNullable() {
+        ArchRule rule = ArchRuleDefinition.noMethods()
+                .should()
+                .beAnnotatedWith(Nullable.class);
+
+        rule.allowEmptyShould(true).check(importedClasses);
+    }
 }
