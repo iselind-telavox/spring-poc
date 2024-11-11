@@ -12,14 +12,13 @@ public class User {
     private String lastName;
     private String username;
 
-    public static Optional<User> from(Optional<com.example.spring_boot.repository.User> u) {
+    public static Optional<User> from(com.example.spring_boot.repository.User u) {
         User user = null;
-        if (u.isPresent()) {
-            com.example.spring_boot.repository.User repoUser = u.get();
+        if (u != null) {
             user = new User();
-            user.setFirstName(repoUser.getFirstName());
-            user.setLastName(repoUser.getLastName());
-            user.setUsername(repoUser.getUsername());
+            user.setFirstName(u.getFirstName());
+            user.setLastName(u.getLastName());
+            user.setUsername(u.getUsername());
         }
         return Optional.ofNullable(user);
     }

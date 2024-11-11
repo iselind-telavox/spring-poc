@@ -1,13 +1,10 @@
 package com.example.spring_boot;
 
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
-
-import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,7 +15,7 @@ public class HelloControllerITest {
     private TestRestTemplate template;
 
     @Test
-    public void getHello() throws Exception {
+    public void getHello() {
         ResponseEntity<String> response = template.getForEntity("/", String.class);
         assertThat(response.getBody()).isEqualTo("Greetings from Spring Boot!");
     }

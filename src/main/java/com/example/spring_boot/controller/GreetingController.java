@@ -2,38 +2,39 @@ package com.example.spring_boot.controller;
 
 import com.example.spring_boot.service.AccountService;
 import com.example.spring_boot.service.RiskAssessor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
 @Controller
 public class GreetingController {
-    @Autowired
-    AccountService myAccountService;
+    public static final String THYMELEAF_GREETING_TEMPLATE = "greeting";
+    private final AccountService myAccountService;
+    private final RiskAssessor riskAssessor;
 
-    @Autowired
-    RiskAssessor riskAssessor;
+    public GreetingController(AccountService myAccountService, RiskAssessor riskAssessor) {
+        this.myAccountService = myAccountService;
+        this.riskAssessor = riskAssessor;
+    }
 
     @GetMapping("/greeting")
     public String index(@RequestParam(name = "name", required = false, defaultValue = "there") String name, Model model) {
         Optional<com.example.spring_boot.service.User> uu = myAccountService.getUser(name);
-        boolean securityRisk;
 
-        if (uu.isPresent()) {
-            com.example.spring_boot.service.User user = uu.get();
-            securityRisk = riskAssessor.isSecurityRisk(user);
-            model.addAttribute("name", user.toString());
-        } else {
-            model.addAttribute("name", name);
-            securityRisk = riskAssessor.isSecurityRisk(name);
+        if (uu.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown name");
         }
 
-        model.addAttribute("securityRisk", securityRisk);
-        return "greeting";
-    }
+        com.example.spring_boot.service.User user = uu.get();
+        boolean securityRisk = riskAssessor.isSecurityRisk(user);
+        model.addAttribute("name", user.toString());
 
+        model.addAttribute("securityRisk", securityRisk);
+        return THYMELEAF_GREETING_TEMPLATE;
+    }
 }
