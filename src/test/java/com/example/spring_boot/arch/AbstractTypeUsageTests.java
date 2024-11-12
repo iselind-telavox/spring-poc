@@ -50,6 +50,9 @@ public class AbstractTypeUsageTests {
 
     @Test
     public void methodsNeverReturnNullable() {
+        /*
+        Works in concert with nullAway to make the code more null safe
+         */
         ArchRule rule = ArchRuleDefinition.noMethods()
                 .should()
                 .beAnnotatedWith(Nullable.class);

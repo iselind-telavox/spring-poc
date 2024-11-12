@@ -9,7 +9,7 @@ public class RiskAssessorImpl implements RiskAssessor {
     }
 
     @Override
-    public boolean isSecurityRisk(com.example.spring_boot.service.User user) {
+    public Boolean isSecurityRisk(User user) {
         return isSecurityRisk(user.toString());
     }
 }

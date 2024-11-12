@@ -4,5 +4,5 @@ public interface RiskAssessor {
     /**
      * Assess name for being a security risk
      */
-    boolean isSecurityRisk(User user);
+    Boolean isSecurityRisk(User user);
 }
